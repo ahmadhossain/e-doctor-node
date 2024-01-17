@@ -64,3 +64,18 @@ model Post {
   userEmail String
   user      User      @relation(fields: [userEmail], references: [email])
 }
+
+model Doctor{
+  id String @id @default(cuid()) @map("_id")
+  fullName String
+  gender String
+  district String
+  nid String
+  regNumBMDC String
+  doctorType String
+  mobile String
+  email String
+  password String
+  isVerified Boolean 
+  role String
+}

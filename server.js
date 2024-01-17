@@ -8,6 +8,7 @@ const { Server } = require("socket.io");
 
 const conversationRoute = require("./routes/conversation");
 const postsRoute = require("./routes/posts");
+const doctorsRoute = require("./routes/doctors");
 
 const { PrismaClient } = require("@prisma/client");
 
@@ -26,6 +27,7 @@ async function main() {
 
   app.use("/api/conversation", conversationRoute);
   app.use("/api/posts", postsRoute);
+  app.use("/api/doctors", doctorsRoute);
 
   app.get("/", (req, res) => {
     res.send("welcome to homepage");
