@@ -51,11 +51,13 @@ router.post("/", async (req, res) => {
   }
 });
 
-router.get("/verified", async (req, res) => {
+router.get("/speciality/:sid", async (req, res) => {
+  const { sid } = req.params;
   try {
     const doctors = await prisma.doctor.findMany({
       where: {
         isVerified: true,
+        sid,
       },
     });
     res.status(200).json(doctors);

@@ -80,6 +80,7 @@ model Doctor{
   role String
   image String?
   specialities String?
+  sid String?
   degree String?
   working String?
   rating Int?
