@@ -78,4 +78,10 @@ model Doctor{
   password String
   isVerified Boolean 
   role String
+  image String?
+  specialities String?
+  degree String?
+  working String?
+  rating Int?
+  experience Int?
 }
