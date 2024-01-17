@@ -27,6 +27,23 @@ router.get("/:slug", async (req, res) => {
   }
 });
 
+router.post("/", async (req, res) => {
+  const { title, desc, slug, userEmail } = req.body;
+  try {
+    const post = await prisma.post.create({
+      data: {
+        title,
+        desc,
+        slug,
+        userEmail: userEmail,
+      },
+    });
+    res.status(200).json(post);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
 // const { title, content, authorEmail } = req.body;
 // const result = await prisma.post.create({
 //   data: {
