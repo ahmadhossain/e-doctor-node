@@ -6,14 +6,12 @@ const helmet = require("helmet");
 const morgan = require("morgan");
 const { Server } = require("socket.io");
 
-const patientRoute = require("./routes/patient");
 const conversationRoute = require("./routes/conversation");
 const postsRoute = require("./routes/posts");
 
 const { PrismaClient } = require("@prisma/client");
 
 const prisma = new PrismaClient();
-module.exports = prisma;
 
 const app = express();
 const port = 8080;
@@ -26,7 +24,6 @@ async function main() {
   app.use(morgan("common"));
   app.use(helmet());
 
-  app.use("/api/patient", patientRoute);
   app.use("/api/conversation", conversationRoute);
   app.use("/api/posts", postsRoute);
 

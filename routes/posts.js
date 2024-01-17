@@ -1,9 +1,7 @@
 const router = require("express").Router();
+
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
-// const Conversation = require("../models/Conversation");
-
-//new conv
 
 router.get("/", async (req, res) => {
   try {
@@ -13,6 +11,31 @@ router.get("/", async (req, res) => {
     res.status(500).json(err);
   }
 });
+
+router.get("/:slug", async (req, res) => {
+  try {
+    const { slug } = req.params;
+    const post = await prisma.post.findUnique({
+      where: {
+        slug,
+      },
+      include: { user: true },
+    });
+    res.status(200).json(post);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+// const { title, content, authorEmail } = req.body;
+// const result = await prisma.post.create({
+//   data: {
+//     title: title,
+//     content: content,
+//     author: { connect: { email: authorEmail } },
+//   },
+// });
+// return res.status(201).json(result);
 
 //get conv of a user
 
