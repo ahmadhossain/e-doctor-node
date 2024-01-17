@@ -5,12 +5,12 @@ const prisma = new PrismaClient();
 
 router.get("/unverified", async (req, res) => {
   try {
-    const posts = await prisma.doctor.findMany({
+    const doctors = await prisma.doctor.findMany({
       where: {
         isVerified: false,
       },
     });
-    res.status(200).json(posts);
+    res.status(200).json(doctors);
   } catch (err) {
     res.status(500).json(err);
   }
@@ -30,7 +30,7 @@ router.post("/", async (req, res) => {
     role,
   } = req.body;
   try {
-    const post = await prisma.doctor.create({
+    const doctor = await prisma.doctor.create({
       data: {
         fullName,
         gender,
@@ -45,7 +45,7 @@ router.post("/", async (req, res) => {
         isVerified: false,
       },
     });
-    res.status(200).json(post);
+    res.status(200).json(doctor);
   } catch (err) {
     res.status(500).json(err);
   }
@@ -53,12 +53,32 @@ router.post("/", async (req, res) => {
 
 router.get("/verified", async (req, res) => {
   try {
-    const post = await prisma.doctor.findMany({
+    const doctors = await prisma.doctor.findMany({
       where: {
         isVerified: true,
       },
     });
-    res.status(200).json(post);
+    res.status(200).json(doctors);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+router.get("/verify/:email", async (req, res) => {
+  const { email } = req.params;
+  try {
+    const doctor = await prisma.doctor.update({
+      where: {
+        email,
+      },
+      data: { isVerified: true },
+    });
+    const doctors = await prisma.doctor.findMany({
+      where: {
+        isVerified: false,
+      },
+    });
+    res.status(200).json(doctors);
   } catch (err) {
     res.status(500).json(err);
   }
