@@ -51,6 +51,42 @@ router.post("/", async (req, res) => {
   }
 });
 
+router.get("/sortByExperience/:sid", async (req, res) => {
+  const { sid } = req.params;
+  try {
+    const doctors = await prisma.doctor.findMany({
+      where: {
+        isVerified: true,
+        sid,
+      },
+      orderBy: {
+        experience: "desc",
+      },
+    });
+    res.status(200).json(doctors);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+router.get("/sortByRating/:sid", async (req, res) => {
+  const { sid } = req.params;
+  try {
+    const doctors = await prisma.doctor.findMany({
+      where: {
+        isVerified: true,
+        sid,
+      },
+      orderBy: {
+        rating: "desc",
+      },
+    });
+    res.status(200).json(doctors);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
 router.get("/speciality/:sid", async (req, res) => {
   const { sid } = req.params;
   try {
